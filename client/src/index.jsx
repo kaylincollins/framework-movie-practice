@@ -33,6 +33,9 @@ class MovieList extends React.Component {
   			matchedMovies.push(this.state.list[i]);
   		}
   	}
+  	if (matchedMovies.length === 0) {
+  		matchedMovies.push({title: 'No Movies found under that name'})
+  	}
   	this.setState({
   		list: matchedMovies,
   		search: ''
@@ -51,12 +54,18 @@ class MovieList extends React.Component {
   	})
   }
 
+  filterWatched() {
+
+  }
+
 
   render() {
     return (
       <div>
       <AddMovie onChange={this.onAdd.bind(this)} onClick={this.handleAdd.bind(this)}/>
       <Search onChange={this.onChange.bind(this)} onClick={this.handleSearch.bind(this)}/>
+      <button> Watched </button>
+      <button> To Be Watched </button>
       { this.state.list.map((movie, index) =>
       	<Movie movie={movie} key={index}/>
       	)
