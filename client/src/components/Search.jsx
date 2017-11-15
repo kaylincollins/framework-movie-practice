@@ -2,8 +2,8 @@ import React from 'react';
 
 const Search = (props) => (
   <div>
-  	<input></input>
-  	<button>Search</button>
+  	<input onChange={(e)=> props.onChange(e)}></input>
+  	<button onClick={()=> props.onClick()}>Search</button>
   </div>
   )
 
