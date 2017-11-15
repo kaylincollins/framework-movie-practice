@@ -3,21 +3,31 @@ import ReactDOM  from 'react-dom';
 import Movie from './components/Movie.jsx';
 import Search from './components/Search.jsx';
 import AddMovie from './components/AddMovie.jsx';
+import $ from 'jquery';
 
 class MovieList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-    	list: [
-			  {title: 'Mean Girls'},
-			  {title: 'Hackers'},
-			  {title: 'The Grey'},
-			  {title: 'Sunshine'},
-			  {title: 'Ex Machina'},
-			], 
+    	list: [], 
 			search: '',
 			add: ''
 		}
+  }
+
+  componentDidMount() {
+    $.ajax({
+      method: 'GET',
+      url: '/movies',
+      success: (data) => {
+        this.setState({
+          list: data
+        })
+      },
+      error: function(err) {
+        console.log(err)
+      }
+    });
   }
 
   onChange(e) {
@@ -48,16 +58,23 @@ class MovieList extends React.Component {
   	})
   }
 
-  handleAdd() {
-  	this.setState({
-  		list: this.state.list.concat({title: this.state.add})
-  	})
+  handleAdd(data) {
+    var data = {title: this.state.add};
+  	$.ajax({
+      method: 'POST',
+      url: '/movies',
+      data: data,
+      success: (data) => {
+        console.log('success!');
+        this.setState({
+          list: data
+        })
+      },
+      error: function(err) {
+        console.log(err)
+      }
+    });
   }
-
-  filterWatched() {
-
-  }
-
 
   render() {
     return (
