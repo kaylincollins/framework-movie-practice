@@ -21,6 +21,7 @@ class MovieList extends React.Component {
       method: 'GET',
       url: '/load',
       success: (data) => {
+        console.log(JSON.parse(data));
         this.setState({
           list: JSON.parse(data)
         })
@@ -66,9 +67,8 @@ class MovieList extends React.Component {
       url: '/movies',
       data: data,
       success: (data) => {
-        console.log('success!');
         this.setState({
-          list: data
+          list: JSON.parse(data)
         })
       },
       error: function(err) {
