@@ -21,9 +21,8 @@ class Movie extends React.Component {
   			<div>{this.props.movie.title}	</div>
   			<button onClick={this.toggleWatched.bind(this)}>{this.state.watched ? 'Watched' : 'To Be Watched'}</button>
   		</div>
-  	)
+		)
 	}
 }
 
 export default Movie;
-

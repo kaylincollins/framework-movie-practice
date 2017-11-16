@@ -11,17 +11,18 @@ class MovieList extends React.Component {
     this.state = {
     	list: [], 
 			search: '',
-			add: ''
+			add: '',
+      toggleView: false //movies that have not been watched yet
 		}
   }
 
   componentDidMount() {
     $.ajax({
       method: 'GET',
-      url: '/movies',
+      url: '/load',
       success: (data) => {
         this.setState({
-          list: data
+          list: JSON.parse(data)
         })
       },
       error: function(err) {
@@ -76,16 +77,28 @@ class MovieList extends React.Component {
     });
   }
 
+  toggleViewWatched() {
+    this.setState({
+      toggleView: true
+    })
+  }
+
+  ToggleViewToBeWatched() {
+    this.setState({
+      toggleView: false
+    })
+  }
+
   render() {
     return (
       <div>
       <AddMovie onChange={this.onAdd.bind(this)} onClick={this.handleAdd.bind(this)}/>
       <Search onChange={this.onChange.bind(this)} onClick={this.handleSearch.bind(this)}/>
-      <button> Watched </button>
-      <button> To Be Watched </button>
-      { this.state.list.map((movie, index) =>
-      	<Movie movie={movie} key={index}/>
-      	)
+      <button onClick={this.toggleViewWatched.bind(this)}> Watched </button>
+      <button onClick={this.ToggleViewToBeWatched.bind(this)}> To Be Watched </button>
+      { this.state.list.map((movie, index) => 
+         <Movie movie={movie} key={index} toggleView={this.state.toggleView}/> 
+        )
       }
 
       </div>
